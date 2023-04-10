@@ -7,7 +7,9 @@ const AuthMiddleware = require("../middlewares/AuthMidleware.js");
 const AuthRouter = require("./Auth.router.js");
 const MotelRouter = require("./Motel.router.js");
 const RoomRouter = require("./Room.router.js");
-// const UserRouter = require("./User.router.js");
+const PostRouter = require("./Post.router.js");
+const ApiRouter = require("./Api.router.js");
+const UserRouter = require("./User.router.js");
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -16,6 +18,7 @@ const router = express.Router();
 app.use("/auth", AuthRouter);
 app.use("/motel", AuthMiddleware, MotelRouter);
 app.use("/room", AuthMiddleware, RoomRouter);
-// router.use("/user", UserRouter);
-
+app.use("/posts", AuthMiddleware, PostRouter);
+app.use("/user", AuthMiddleware, UserRouter);
+app.use("/", ApiRouter);
 module.exports = app;

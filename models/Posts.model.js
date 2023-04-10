@@ -3,8 +3,16 @@ const mongoose = require("mongoose");
 
 const postsSchema = mongoose.Schema(
   {
-    user: { type: mongoose.Types.ObjectId, ref: "user" },
-    content: String,
+    userId: { type: mongoose.Types.ObjectId, ref: "user" },
+    addresses: String,
+    phone: String,
+    price: String,
+    city: String,
+    district: String,
+    ward: String,
+    road: String,
+    content: { type: String, require: true },
+    isPrivate: { type: Boolean },
     images: { type: Array, default: [] },
     likes: [{ type: mongoose.Types.ObjectId, ref: "user" }],
     comments: [{ type: mongoose.Types.ObjectId, ref: "comment" }],
