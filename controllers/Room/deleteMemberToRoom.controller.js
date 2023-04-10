@@ -10,17 +10,31 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const deleteMemberToRoom = async (req, res) => {
   try {
-    const { roomId, name, sdt, avatar, email, cccd, note } = req.body;
+    const { roomId } = req.query;
+    const { name, sdt, avatar, email, cccd, note } = req.body;
+    const result = await Room.findOne({
+      $and: [{ _id: roomId }, { userId: req.userId }],
+    });
+    if (result) {
+      const room = await Room.findOneAndUpdate(
+        { _id: roomId },
+        {
+          $pull: { member: { cccd } },
+        }
+      );
+      return res.json(
+        jsonGenerate(StatusCode.OK, "Xoá Thành Viên Thành Công", room)
+      );
+    } else {
+      return res.json(
+        jsonGenerate(
+          StatusCode.BADREQUEST,
+          "Xoá Thành Viên Không Thành Công",
+          null
+        )
+      );
+    }
 
-    const room = await Room.findOneAndUpdate(
-      { _id: roomId },
-      {
-        $pull: { member: { cccd } },
-      }
-    );
-    return res.json(
-      jsonGenerate(StatusCode.SUCCESS, "Xoá Thành Viên Thành Công", room)
-    );
   } catch (error) {}
 };
 

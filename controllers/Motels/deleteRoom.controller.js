@@ -10,18 +10,19 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const deleteRoom = async (req, res) => {
   try {
+    const { roomId } = req.query;
     const result = await Room.findOneAndDelete({
-      _id: req.body.roomId,
+      _id: roomId,
     });
 
     if (result) {
       const model = await Motels.findOneAndUpdate(
         { userId: req.userId },
-        { $pull: { Room: req.body.roomId } }
+        { $pull: { rooms: roomId } }
       );
 
       return res.json(
-        jsonGenerate(StatusCode.SUCCESS, "Xoa Phong Thanh cong", null)
+        jsonGenerate(StatusCode.OK, "Xoa Phong Thanh cong", null)
       );
     }
   } catch (error) {

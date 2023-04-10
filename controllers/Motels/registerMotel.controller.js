@@ -10,9 +10,11 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const registerMotel = async (req, res) => {
   try {
+    
     const result = await Motels.create({
       userId: req.userId,
-      motel_Name: req.body.motel_Name,
+      motelName: req.body.motelName,
+      motelInfo: req.body.Info,
     });
 
     if (result) {
@@ -23,7 +25,7 @@ const registerMotel = async (req, res) => {
         }
       );
       return res.json(
-        jsonGenerate(StatusCode.SUCCESS, "created Succssfully", result)
+        jsonGenerate(StatusCode.OK, "created Succssfully", result)
       );
     }
   } catch (error) {}

@@ -36,6 +36,7 @@ const userSchema = mongoose.Schema(
       default: "user",
     },
     isSex: { type: String, required: true },
+
     Motel: { type: mongoose.Types.ObjectId, ref: "motels" },
     SavePost: [
       {

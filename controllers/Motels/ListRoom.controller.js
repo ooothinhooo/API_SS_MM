@@ -12,13 +12,11 @@ const listRoom = async (req, res) => {
   try {
     // var uid = req.query.uid;
     // const result = await Motels.findOne({ userId: req.userId })
-    const result = await Motels.findById(req.query.motel_Id)
+    const result = await Motels.findById(req.query.motelId)
       .populate("rooms")
       .exec();
 
-    return res.json(
-      jsonGenerate(StatusCode.SUCCESS, result?.motel_Name, result)
-    );
+    return res.json(jsonGenerate(StatusCode.OK, result?.motelName, result));
   } catch (error) {
     return res.json(
       jsonGenerate(StatusCode.UNPROCESSABLE_ENTITY, "Error", error)

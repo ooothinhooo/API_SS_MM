@@ -3,7 +3,17 @@ const mongoose = require("mongoose");
 
 const roomsSchema = mongoose.Schema(
   {
-    room_Code: {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
+    motelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "motels",
+      required: true,
+    },
+    roomCode: {
       type: String,
       required: true,
     },

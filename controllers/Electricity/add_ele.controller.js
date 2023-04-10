@@ -10,12 +10,15 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const addEle = async (req, res) => {
   try {
-    const { newEle, oldEle } = req.body;
-    const result = await Room.findById(req.body.roomId);
+    const { newEle, oldEle, roomId } = req.query;
+
+    const result = await Room.findOne({
+      $and: [{ _id: roomId }, { userId: req.userId }],
+    });
 
     if (result) {
       await result.updateOne({ $push: { electricity: { newEle, oldEle } } });
-      return res.json(jsonGenerate(StatusCode.SUCCESS, "Them thanh cong"));
+      return res.json(jsonGenerate(StatusCode.OK, "Them thanh cong"));
     }
     return res.json(jsonGenerate(StatusCode.FORBIDDEN, "Them That Bai"));
   } catch (error) {}

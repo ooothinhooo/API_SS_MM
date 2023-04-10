@@ -10,17 +10,32 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const addMemberToRoom = async (req, res) => {
   try {
-    const { roomId, name, sdt, avatar, email, cccd, note } = req.body;
+    const { roomId } = req.query;
+    const member = ({ name, sdt, avatar, email, cccd, note } = req.body);
 
-    const room = await Room.findOneAndUpdate(
-      { _id: roomId },
-      {
-        $push: { member: { name, sdt, avatar, email, cccd, note } },
-      }
-    );
-    return res.json(
-      jsonGenerate(StatusCode.SUCCESS, "Thêm Thành Viên Thành Công", room)
-    );
+    const result = await Room.findOne({
+      $and: [{ _id: roomId }, { userId: req.userId }],
+    });
+    if (result) {
+      const room = await Room.findOneAndUpdate(
+        { _id: roomId },
+        {
+          $push: { member: member },
+        }
+      );
+      return res.json(
+        jsonGenerate(StatusCode.OK, "Thêm Thành Viên Thành Công", room)
+      );
+    } else {
+      return res.json(
+        jsonGenerate(
+          StatusCode.BADREQUEST,
+          "Thêm Thành Viên Không Thành Công",
+          null
+        )
+      );
+    }
+   
   } catch (error) {}
 };
 

@@ -10,8 +10,16 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const deleteEle = async (req, res) => {
   try {
+    const { roomId } = req.query;
+
+    const result = await Room.findOne({
+      $and: [{ _id: roomId }, { userId: req.userId }],
+    });
+    if (!result) {
+      return res.json(jsonGenerate(StatusCode.BADREQUEST, "Xoá Thất Bại"));
+    }
     const x = await Room.updateOne(
-      { _id: req.body.roomId },
+      { _id: roomId },
       { $pop: { electricity: 1 } }
     );
     return res.json(jsonGenerate(StatusCode.ACCEPTED, "Xoa Thanh cong"));

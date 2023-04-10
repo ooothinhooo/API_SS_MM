@@ -62,7 +62,7 @@ const Login = async (req, res) => {
     }
 
     return res.json(
-      jsonGenerate(StatusCode.SUCCESS, "Login Successful", {
+      jsonGenerate(StatusCode.OK, "Login Successful", {
         userId: user._id,
         uid: user.uid,
         username: username,

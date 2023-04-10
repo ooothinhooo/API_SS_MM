@@ -59,7 +59,7 @@ const Register = async (req, res) => {
       const token = Jwt.sign({ userId: result._id }, JWT_TOKEN_SECRET);
       //! Registration successful
       res.json(
-        jsonGenerate(StatusCode.SUCCESS, "Registration successful", {
+        jsonGenerate(StatusCode.OK, "Registration successful", {
           userId: result._id,
           token: token,
         })

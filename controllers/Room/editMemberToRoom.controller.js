@@ -29,13 +29,13 @@ const editMemberToRoom = async (req, res) => {
           }
         );
         return res.json(
-          jsonGenerate(StatusCode.SUCCESS, "sửa Thành Viên Thành Công", room)
+          jsonGenerate(StatusCode.OK, "sửa Thành Viên Thành Công", room)
         );
       }
     } else {
       return res.json(
         jsonGenerate(
-          StatusCode.SUCCESS,
+          StatusCode.OK,
           "sửa Thành Viên Không Thành Công",
           result
         )

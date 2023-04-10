@@ -10,22 +10,29 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const addRoom = async (req, res) => {
   try {
-    const { room_Code, motel_Id } = req.body;
+    const { roomCode, motelId } = req.query;
+
     // const user = await User.findById(req.userId)
     const result = await Room.create({
-      room_Code: room_Code,
+      userId: req.userId,
+      motelId: motelId,
+      roomCode: roomCode,
     });
     if (result) {
       const Motel = await Motels.findOneAndUpdate(
-        { _id: motel_Id },
+        { _id: motelId },
         {
-          $push: { Room: result },
+          $push: { rooms: result },
         }
       );
       return res.json(
+        jsonGenerate(StatusCode.OK, `Thêm phòng ${roomCode} thành công`, result)
+      );
+    } else {
+      return res.json(
         jsonGenerate(
-          StatusCode.SUCCESS,
-          `Thêm phòng ${room_Code} thành công`,
+          StatusCode.MULTISTATUS,
+          `Thêm phòng ${room_Code} Thất Bại`,
           result
         )
       );

@@ -19,7 +19,7 @@ const editRoom = async (req, res) => {
       }
     );
     return res.json(
-      jsonGenerate(StatusCode.SUCCESS, "Thêm Thành Viên Thành Công", room)
+      jsonGenerate(StatusCode.OK, "Thêm Thành Viên Thành Công", room)
     );
   } catch (error) {}
 };

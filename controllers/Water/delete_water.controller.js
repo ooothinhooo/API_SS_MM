@@ -10,11 +10,17 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const deleteWater = async (req, res) => {
   try {
-    const x = await Room.updateOne(
-      { _id: req.body.roomId },
-      { $pop: { water: 1 } }
-    );
-    return res.json(jsonGenerate(StatusCode.ACCEPTED, "Xoa Thanh cong"));
+    const { newWater, oldWater, roomId } = req.query;
+    const result = await Room.findOne({
+      $and: [{ _id: roomId }, { userId: req.userId }],
+    });
+    if (result) {
+      const x = await Room.updateOne({ _id: roomId }, { $pop: { water: 1 } });
+      return res.json(jsonGenerate(StatusCode.OK, "Xoa Thanh cong"));
+    } else {
+      return res.json(jsonGenerate(StatusCode.BADREQUEST, "Xoa Thất Bại"));
+    }
+
   } catch (error) {}
 };
 
