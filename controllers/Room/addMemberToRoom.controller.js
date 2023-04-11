@@ -7,20 +7,28 @@ const Motels = require("../../models/Motels.model.js");
 
 const { StatusCode } = require("../../utils/constants.js");
 const { jsonGenerate } = require("../../utils/helpers.js");
+const Member = require("../../models/Member.model.js");
 
 const addMemberToRoom = async (req, res) => {
   try {
-    const { roomId } = req.query;
-    const member = ({ name, sdt, avatar, email, cccd, note } = req.body);
+    const { roomId, memberId } = req.query;
+    // const member = ({ name, sdt, avatar, email, cccd, note } = req.body);
 
     const result = await Room.findOne({
       $and: [{ _id: roomId }, { userId: req.userId }],
     });
-    if (result) {
+    const member = await Member.findById({ _id: memberId });
+    if (result && member) {
       const room = await Room.findOneAndUpdate(
         { _id: roomId },
         {
-          $push: { member: member },
+          $push: { member: memberId },
+        }
+      );
+      await Member.findOneAndUpdate(
+        { _id: memberId },
+        {
+          $push: { roomId },
         }
       );
       return res.json(
@@ -35,7 +43,6 @@ const addMemberToRoom = async (req, res) => {
         )
       );
     }
-   
   } catch (error) {}
 };
 
