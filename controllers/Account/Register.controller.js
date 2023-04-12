@@ -35,12 +35,7 @@ const Register = async (req, res) => {
 
     //!User or Email already exists
     if (userExist) {
-      return res.json(
-        jsonGenerate(
-          StatusCode.UNPROCESSABLE_ENTITY,
-          "User or Email already exists"
-        )
-      );
+      return res.json(jsonGenerate(202, "User or Email already exists"));
     }
     //! save to db
     try {
