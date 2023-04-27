@@ -17,6 +17,10 @@ const roomsSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    bill: {
+      type: Array,
+      default: [],
+    },
     checkIn: {
       type: String,
     },
@@ -31,7 +35,7 @@ const roomsSchema = mongoose.Schema(
     },
     water: { type: Array, default: [] },
     electricity: { type: Array, default: [] },
-    member: { type: mongoose.Schema.Types.ObjectId, ref: "member" },
+    member: [{ type: mongoose.Schema.Types.ObjectId, ref: "member" }],
   },
   { timestamps: true }
 );
