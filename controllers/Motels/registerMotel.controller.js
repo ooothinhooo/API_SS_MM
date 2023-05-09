@@ -10,20 +10,20 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const registerMotel = async (req, res) => {
   try {
-    
     const result = await Motels.create({
       userId: req.userId,
       motelName: req.body.motelName,
       motelInfo: req.body.Info,
     });
-
+    // console.log(result?._id);
     if (result) {
       const user = await User.findOneAndUpdate(
         { _id: req.userId },
         {
-          $push: { Motel: result },
+          Motel: result?._id,
         }
       );
+      // console.log(user);
       return res.json(
         jsonGenerate(StatusCode.OK, "created Succssfully", result)
       );
