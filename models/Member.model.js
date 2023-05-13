@@ -5,16 +5,18 @@ const memberSchema = mongoose.Schema(
   {
     fullName: { type: String, required: true },
     avatar: { type: String },
-    CCCD: { type: Array, default: [] },
-    Phone: { type: String, required: true },
-    email: { type: String, required: true },
+    cccd: { type: String, required: true },
+    dateRange: { type: String, required: true },
+    phone: { type: String, required: true },
+    email: { type: String },
     dob: { type: String, required: true },
-
+    address: { type: String, required: true },
     roomId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "rooms",
     },
     carNum: { type: String },
+    dateSub: { type: String },
     motelId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "motels",

@@ -7,13 +7,13 @@ const { StatusCode } = require("../../utils/constants.js");
 const { jsonGenerate } = require("../../utils/helpers.js");
 const Member = require("../../models/Member.model.js");
 
-const deleteMember = async (req, res) => {
+const listMember = async (req, res) => {
   try {
-    const result = await Member.findByIdAndDelete(req.query._id);
-    return res.status(200).json({ message: " Delete successfully" });
+    const result = await Member.find({ motelId: req.query.motelId });
+    return res.json(jsonGenerate(StatusCode.SUCCESS, `List Motel`, result));
   } catch (error) {
     return res.status(500).json({ message: error.message, error });
   }
 };
 
-module.exports = deleteMember;
+module.exports = listMember;
