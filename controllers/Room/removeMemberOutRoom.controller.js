@@ -9,7 +9,7 @@ const { StatusCode } = require("../../utils/constants.js");
 const { jsonGenerate } = require("../../utils/helpers.js");
 const Member = require("../../models/Member.model.js");
 
-const addMemberToRoom = async (req, res) => {
+const removeMemberOutRoom = async (req, res) => {
   try {
     const { roomId, memberId } = req.query;
     // const member = ({ name, sdt, avatar, email, cccd, note } = req.body);
@@ -20,17 +20,21 @@ const addMemberToRoom = async (req, res) => {
       const room = await Room.findOneAndUpdate(
         { _id: roomId },
         {
-          $push: { member: memberId },
+          $pull: { member: memberId },
         }
       );
       await Member.findOneAndUpdate(
         { _id: memberId },
         {
-          roomId,
+          roomId: null,
         }
       );
       return res.json(
-        jsonGenerate(StatusCode.OK, "Thêm Thành Viên Thành Công", room)
+        jsonGenerate(
+          StatusCode.OK,
+          "Xoá Thành Viên Ra Khỏi Phòng Thành Công",
+          null
+        )
       );
     } else {
       return res.json(
@@ -46,8 +50,7 @@ const addMemberToRoom = async (req, res) => {
         )
       );
     }
-    
   } catch (error) {}
 };
 
-module.exports = addMemberToRoom;
+module.exports = removeMemberOutRoom;

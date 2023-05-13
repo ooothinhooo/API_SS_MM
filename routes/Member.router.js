@@ -2,12 +2,16 @@ const express = require("express");
 const addMember = require("../controllers/Member/addMember.controller.js");
 const listMember = require("../controllers/Member/ListMemberOnMotel.controller.js");
 const deleteMember = require("../controllers/Member/deleteMember.controller.js");
+const listMemberOnRoom = require("../controllers/Member/ListMemberOnRoom.controller.js");
+const listMemberNoRoom = require("../controllers/Member/ListMemberNoRoom.controller.js");
 
 const router = express.Router();
 
 router.post("/add", addMember);
 router.put("/delete", deleteMember);
 router.get("/listmember", listMember);
+router.get("/listmemberonroom", listMemberOnRoom);
+router.get("/listmembernoroom", listMemberNoRoom);
 
 // router.post("/", Register);
 
