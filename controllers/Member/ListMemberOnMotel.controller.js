@@ -9,7 +9,9 @@ const Member = require("../../models/Member.model.js");
 
 const listMember = async (req, res) => {
   try {
-    const result = await Member.find({ motelId: req.query.motelId });
+    const result = await Member.find({ motelId: req.query.motelId }).populate(
+      "roomId"
+    );
     return res.json(jsonGenerate(StatusCode.SUCCESS, `List Motel`, result));
   } catch (error) {
     return res.status(500).json({ message: error.message, error });

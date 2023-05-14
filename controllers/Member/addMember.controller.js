@@ -11,7 +11,8 @@ const addMember = async (req, res) => {
   try {
     const newPost = new Member({ ...req.body });
     await newPost.save();
-    return res.status(200).json({ message: "Post created successfully" });
+    // return res.status(200).json({ message: "Post created successfully" });
+    return res.json(jsonGenerate(StatusCode.OK, "Thêm Thành Viên Thành Công"));
   } catch (error) {
     return res.status(500).json({ message: error.message, error });
   }
