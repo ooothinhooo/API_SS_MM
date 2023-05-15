@@ -11,7 +11,9 @@ const Rooms = require("../../models/Room.model.js");
 const listMemberOnRoom = async (req, res) => {
   try {
     const { _id } = req.query;
-    const result = await Rooms.findById(_id).populate("member");
+    const result = await Rooms.findById(_id)
+      .populate("member")
+      .populate("userSub");
     return res.json(jsonGenerate(StatusCode.SUCCESS, `List Motel`, result));
   } catch (error) {
     return res.status(500).json({ message: error.message, error });

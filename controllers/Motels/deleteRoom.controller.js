@@ -4,6 +4,7 @@ const Jwt = require("jsonwebtoken");
 const User = require("../../models/Users.model.js");
 const Room = require("../../models/Room.model.js");
 const Motels = require("../../models/Motels.model.js");
+const Member = require("../../models/Member.model.js");
 
 const { StatusCode } = require("../../utils/constants.js");
 const { jsonGenerate } = require("../../utils/helpers.js");
@@ -20,7 +21,12 @@ const deleteRoom = async (req, res) => {
         { userId: req.userId },
         { $pull: { rooms: roomId } }
       );
-
+      await Member.findOneAndUpdate(
+        { roomId: roomId },
+        {
+          roomId: null,
+        }
+      );
       return res.json(
         jsonGenerate(StatusCode.OK, "Xoa Phong Thanh cong", null)
       );

@@ -12,6 +12,8 @@ const UpdateBill = require("../controllers/Bill/UpdateBill.js");
 const DeleteBill = require("../controllers/Bill/DeleteBill.js");
 const DeleteAllBill = require("../controllers/Bill/DeleteAllBill.js");
 const removeMemberOutRoom = require("../controllers/Room/removeMemberOutRoom.controller.js");
+const userSubToRoom = require("../controllers/Room/userSubToRoom.controller.js");
+const updateServiceToRoom = require("../controllers/Room/updateSerVicRoom.comtroller.js");
 
 const router = express.Router();
 
@@ -21,6 +23,10 @@ router.put("/edit", editRoom);
 // router.post("/", Register);
 router.put("/remove_member_out_room", removeMemberOutRoom);
 
+//tải thành viên đky phong
+router.post("/upmember", userSubToRoom);
+// update service room
+router.post("/update_service", updateServiceToRoom);
 
 router.post("/createbill", CreateBill);
 router.post("/updatebill", UpdateBill);

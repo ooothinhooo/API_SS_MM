@@ -21,21 +21,31 @@ const roomsSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
+    userSub: { type: mongoose.Schema.Types.ObjectId, ref: "member" },
+    member: [{ type: mongoose.Schema.Types.ObjectId, ref: "member" }],
+    //ngày nhận phòng
     checkIn: {
       type: String,
     },
-    checkOut: {
-      type: String,
-    },
+
+    // giá phòng
     roomFee: {
       type: String,
     },
+    // tiền cọc
     deposit: {
       type: String,
     },
-    water: { type: Array, default: [] },
-    electricity: { type: Array, default: [] },
-    member: [{ type: mongoose.Schema.Types.ObjectId, ref: "member" }],
+    electricityPrice: {
+      type: String,
+    },
+    waterPrice: {
+      type: String,
+    },
+    //kỳ hạn
+    term: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

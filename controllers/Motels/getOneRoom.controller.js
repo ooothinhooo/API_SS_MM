@@ -12,7 +12,9 @@ const getOneRoom = async (req, res) => {
   try {
     // var uid = req.query.uid;
     // const result = await Motels.findOne({ userId: req.userId })
-    const result = await Room.findById(req.query.roomId);
+    const result = await Room.findById(req.query.roomId)
+      .populate("member")
+      .populate("userSub");
     return res.json(jsonGenerate(StatusCode.OK, "Data", result));
   } catch (error) {
     return res.json(
