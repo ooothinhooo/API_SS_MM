@@ -21,6 +21,7 @@ const CreateBill = async (req, res) => {
       oldEle,
       newEle,
       roomCharge,
+      monnth,
       id,
     } = req.body;
     const result = await Room.findOne({
@@ -30,6 +31,7 @@ const CreateBill = async (req, res) => {
       await result.updateOne({
         $push: {
           bill: {
+            monnth,
             checkIn,
             CheckOut,
             oldWater,
