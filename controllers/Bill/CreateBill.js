@@ -13,17 +13,7 @@ const CreateBill = async (req, res) => {
     // const { newWater, oldWater, roomId } = req.query;
     // const result = await Room.findById(roomId);
     const { roomId } = req.query;
-    const {
-      checkIn,
-      CheckOut,
-      oldWater,
-      newWater,
-      oldEle,
-      newEle,
-      roomCharge,
-      monnth,
-      id,
-    } = req.body;
+   
     const result = await Room.findOne({
       $and: [{ _id: roomId }, { userId: req.userId }],
     });
@@ -31,15 +21,7 @@ const CreateBill = async (req, res) => {
       await result.updateOne({
         $push: {
           bill: {
-            monnth,
-            checkIn,
-            CheckOut,
-            oldWater,
-            newWater,
-            oldEle,
-            newEle,
-            roomCharge,
-            id,
+            ...req.body,
           },
         },
       });
