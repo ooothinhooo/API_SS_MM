@@ -25,19 +25,19 @@ const DeleteBill = async (req, res) => {
   try {
     // const { newWater, oldWater, roomId } = req.query;
     // const result = await Room.findById(roomId);
-    const { roomId } = req.query;
-    const { id } = req.body;
+    const { roomId, month } = req.query;
+    // const { month } = req.body;
     const result = await Room.findOne({
       $and: [{ _id: roomId }, { userId: req.userId }],
     });
     if (result) {
-      bill = result?.bill.filter((obj) => obj.id !== id);
+      bill = result?.bill.filter((obj) => obj.month !== month);
       await result.updateOne({
         $set: {
           bill,
         },
       });
-      return res.json(jsonGenerate(StatusCode.OK, "Them thanh cong"));
+      return res.json(jsonGenerate(StatusCode.OK, "Xoá Bill Thành công"));
     }
     return res.json(jsonGenerate(StatusCode.BADREQUEST, "Them That Bai"));
   } catch (error) {}

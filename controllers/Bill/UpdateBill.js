@@ -9,9 +9,9 @@ const { StatusCode } = require("../../utils/constants.js");
 const { jsonGenerate } = require("../../utils/helpers.js");
 
 // Tìm và cập nhật object theo id
-function updateObjById(arr, id, newValues) {
+function updateObjById(arr, month, newValues) {
   // Tìm index của object cần cập nhật
-  let index = arr.findIndex((obj) => obj.id === id);
+  let index = arr.findIndex((obj) => obj.month === month);
   // Nếu không tìm thấy object, trả về mảng ban đầu
   if (index === -1) {
     return arr;
@@ -26,28 +26,17 @@ const UpdateBill = async (req, res) => {
     // const { newWater, oldWater, roomId } = req.query;
     // const result = await Room.findById(roomId);
     const { roomId } = req.query;
-    const {
-      checkIn,
-      CheckOut,
-      oldWater,
-      newWater,
-      oldEle,
-      newEle,
-      roomCharge,
-      id,
-    } = req.body;
+    const { oldWater, newWater, oldEle, newEle, month } = req.body;
     const result = await Room.findOne({
       $and: [{ _id: roomId }, { userId: req.userId }],
     });
     if (result) {
-      let bill = updateObjById(result.bill, id, {
-        checkIn,
-        CheckOut,
+      let bill = updateObjById(result.bill, month, {
+        month,
         oldWater,
         newWater,
         oldEle,
         newEle,
-        roomCharge,
       });
       await result.updateOne({
         $set: {
