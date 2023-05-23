@@ -11,6 +11,7 @@ const PostRouter = require("./Post.router.js");
 const ApiRouter = require("./Api.router.js");
 const UserRouter = require("./User.router.js");
 const MemberRouter = require("./Member.router.js");
+const ServiceRouter = require("./Services.router.js");
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -22,5 +23,6 @@ app.use("/room", AuthMiddleware, RoomRouter);
 app.use("/posts", AuthMiddleware, PostRouter);
 app.use("/user", AuthMiddleware, UserRouter);
 app.use("/member", AuthMiddleware, MemberRouter);
+app.use("/service", AuthMiddleware, ServiceRouter);
 app.use("/", ApiRouter);
 module.exports = app;

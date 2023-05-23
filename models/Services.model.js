@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 
 const serviceSchema = mongoose.Schema(
   {
+    motelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "motels",
+      required: true,
+    },
     name: {
       type: String,
       required: true,

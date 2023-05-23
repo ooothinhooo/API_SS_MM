@@ -10,7 +10,7 @@ const MotelsSchema = mongoose.Schema(
     },
     motelName: { type: String, required: true },
     motelInfo: { type: Array },
-    services: { type: mongoose.Types.ObjectId, ref: "services" },
+    services: [{ type: mongoose.Types.ObjectId, ref: "services" }],
     // service: [
     //   {
     //     ele: {

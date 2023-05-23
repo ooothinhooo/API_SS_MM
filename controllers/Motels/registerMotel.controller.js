@@ -25,6 +25,7 @@ const registerMotel = async (req, res) => {
         Motel: result?._id,
       }
     );
+
     if (result) {
       const user = await User.findOne({ _id: req.userId });
       const token = Jwt.sign({ userId: user._id }, JWT_TOKEN_SECRET);
