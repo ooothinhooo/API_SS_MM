@@ -17,6 +17,10 @@ const roomsSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+    },
     bill: {
       type: Array,
       default: [],
@@ -46,6 +50,7 @@ const roomsSchema = mongoose.Schema(
     term: {
       type: String,
     },
+    services: [{ type: mongoose.Schema.Types.ObjectId, ref: "services" }],
   },
   { timestamps: true }
 );

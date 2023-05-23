@@ -12,9 +12,13 @@ const listRoom = async (req, res) => {
   try {
     // var uid = req.query.uid;
     // const result = await Motels.findOne({ userId: req.userId })
-    const result = await Motels.findById(req.query.motelId)
-      .populate("rooms")
-      .exec();
+    // const result = await Motels.findById(req.query.motelId)
+    //   .populate("rooms")
+    //   .populate("services")
+    //   .exec();
+    const result = await Room.find({ motelId: req.query.motelId })
+      .populate("member")
+      .populate("services");
 
     return res.json(jsonGenerate(StatusCode.OK, result?.motelName, result));
   } catch (error) {

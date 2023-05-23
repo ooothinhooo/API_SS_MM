@@ -38,6 +38,7 @@ const userSchema = mongoose.Schema(
     isSex: { type: String, required: true },
 
     Motel: { type: mongoose.Types.ObjectId, ref: "motels" },
+
     Posts: [
       {
         type: mongoose.Types.ObjectId,
