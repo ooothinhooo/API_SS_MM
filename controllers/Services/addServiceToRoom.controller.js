@@ -22,8 +22,13 @@ const addServiceToRoom = async (req, res) => {
         { _id: { $in: RoomArray } },
         {
           $push: { services: serviceId },
-
           //   $set: { services: serviceId },
+        }
+      );
+      const service = await Service.findByIdAndUpdate(
+        { _id: serviceId },
+        {
+          $set: { RoomUse: RoomArray },
         }
       );
       return res.json(

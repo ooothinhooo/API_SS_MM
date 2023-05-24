@@ -20,6 +20,7 @@ const serviceSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    RoomUse: [{ type: mongoose.Schema.Types.ObjectId, ref: "rooms" }],
   },
   { timestamps: true }
 );
