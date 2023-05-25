@@ -27,13 +27,14 @@ const createManyRoom = async (req, res) => {
           roomFee: item?.roomFee,
           deposit: item?.deposit,
           category: item?.category,
+          services: Motel.services,
         });
         console.log(`Created room: ${item.roomCode}`);
       });
 
       // await Promise.all(createQueue);
       // createQueue = [];
-      console.log(``);
+
       return res.json(jsonGenerate(StatusCode.OK, `Thêm phòngthành công`, {}));
     } else {
       return res.json(

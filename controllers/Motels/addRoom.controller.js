@@ -7,6 +7,7 @@ const Motels = require("../../models/Motels.model.js");
 
 const { StatusCode } = require("../../utils/constants.js");
 const { jsonGenerate } = require("../../utils/helpers.js");
+const Service = require("../../models/Services.model.js");
 
 const addRoom = async (req, res) => {
   try {
@@ -22,26 +23,11 @@ const addRoom = async (req, res) => {
       deposit,
       category,
     });
+    if (result) {
+    }
     return res.json(
       jsonGenerate(StatusCode.OK, `Thêm phòng ${roomCode} thành công`, result)
     );
-    // if (result) {
-    //   const Motel = await Motels.findOneAndUpdate(
-    //     { _id: motelId },
-    //     {
-    //       $push: { rooms: result },
-    //     }
-    //   );
-
-    // } else {
-    //   return res.json(
-    //     jsonGenerate(
-    //       StatusCode.MULTISTATUS,
-    //       `Thêm phòng ${room_Code} Thất Bại`,
-    //       result
-    //     )
-    //   );
-    // }
   } catch (error) {}
 };
 
