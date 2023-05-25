@@ -14,7 +14,16 @@ const getOneRoom = async (req, res) => {
     // const result = await Motels.findOne({ userId: req.userId })
     const result = await Room.findById(req.query.roomId)
       .populate("member")
-      .populate("userSub");
+      .populate("userSub")
+      .populate({
+        path: "services",
+        select: "name value unit",
+        // populate: {
+        //   path: "RoomUse",
+        //   select: "roomCode",
+        // },
+      });
+      
     return res.json(jsonGenerate(StatusCode.OK, "Data", result));
   } catch (error) {
     return res.json(
