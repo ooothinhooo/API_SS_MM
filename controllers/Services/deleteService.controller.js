@@ -21,6 +21,14 @@ const deleteService = async (req, res) => {
         $pull: { services: serviceId },
       }
     );
+    const roomUse = await Room.updateMany(
+      {
+        _id: result.RoomUse,
+      },
+      {
+        $pull: { services: serviceId },
+      }
+    );
     return res.json(
       jsonGenerate(StatusCode.OK, `Xoá dịch vụ  thành công`, result)
     );

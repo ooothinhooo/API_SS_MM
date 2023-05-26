@@ -20,22 +20,33 @@ const createManyRoom = async (req, res) => {
       const createQueue = [];
 
       room.map((item, index) => {
-        rooms.create({
-          userId: req.userId,
-          motelId: motelId,
-          roomCode: item?.roomCode,
-          roomFee: item?.roomFee,
-          deposit: item?.deposit,
-          category: item?.category,
-          services: Motel.services,
-        });
-        console.log(`Created room: ${item.roomCode}`);
+        createQueue.push(
+          rooms.create({
+            userId: req.userId,
+            motelId: motelId,
+            roomCode: item?.roomCode,
+            roomFee: item?.roomFee,
+            deposit: item?.deposit,
+            category: item?.category,
+            services: Motel.services,
+          })
+        );
       });
 
-      // await Promise.all(createQueue);
+      const x = await Promise.all(createQueue);
       // createQueue = [];
-
-      return res.json(jsonGenerate(StatusCode.OK, `Thêm phòngthành công`, {}));
+      if (x) {
+        const service = await Service.updateMany(
+          { _id: { $in: Motel.services } },
+          {
+            $push: { RoomUse: x },
+            //   $set: { services: serviceId },
+          }
+        );
+        return res.json(
+          jsonGenerate(StatusCode.OK, `Thêm phòng thành công`, { x })
+        );
+      }
     } else {
       return res.json(
         jsonGenerate(
