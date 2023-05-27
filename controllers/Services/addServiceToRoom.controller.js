@@ -12,27 +12,42 @@ const Service = require("../../models/Services.model.js");
 const addServiceToRoom = async (req, res) => {
   try {
     const { motelId, serviceId, roomId } = req.query;
-    const { RoomArray } = req.body;
-    const user = await User.findById(req.userId);
-    console.log(RoomArray);
+    const { Push, Pull } = req.body;
+    // const user = await User.findById(req.userId);
+    console.log(Push);
     console.log(serviceId);
-
-    if (user) {
+    // const service = await Service.findById({_id:serviceId})
+    if (true) {
+      // const result = await Room.updateMany(
+      //   { _id: { $in: Push } },
+      //   {
+      //     $push: { services: serviceId },
+      //   }
+      // );
       const result = await Room.updateMany(
-        { _id: { $in: RoomArray } },
+        { _id: { $in: Push }, services: { $ne: serviceId } },
         {
-          $push: { services: serviceId },
-          //   $set: { services: serviceId },
+          $addToSet: { services: serviceId },
+        }
+      );
+      const result2 = await Room.updateMany(
+        { _id: { $in: Pull } },
+        {
+          $pull: { services: serviceId },
         }
       );
       const service = await Service.findByIdAndUpdate(
         { _id: serviceId },
         {
-          $set: { RoomUse: RoomArray },
+          $set: { RoomUse: Push },
         }
       );
       return res.json(
-        jsonGenerate(StatusCode.OK, `Thêm dịch vụ vào phòng thành công`, result)
+        jsonGenerate(
+          StatusCode.OK,
+          `Thêm dịch vụ vào phòng thành công`,
+          service
+        )
       );
     }
     return res.json(jsonGenerate(StatusCode.FORBIDDEN, `Lỗi quyền`));

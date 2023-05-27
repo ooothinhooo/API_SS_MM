@@ -8,6 +8,7 @@ const Member = require("../../models/Member.model.js");
 
 const { StatusCode } = require("../../utils/constants.js");
 const { jsonGenerate } = require("../../utils/helpers.js");
+const Service = require("../../models/Services.model.js");
 
 const deleteRoom = async (req, res) => {
   try {
@@ -17,9 +18,9 @@ const deleteRoom = async (req, res) => {
     });
 
     if (result) {
-      const model = await Motels.findOneAndUpdate(
-        { userId: req.userId },
-        { $pull: { rooms: roomId } }
+      const service = await Service.updateMany(
+        { _id: result?.services },
+        { $pull: { RoomUse: roomId } }
       );
       await Member.findOneAndUpdate(
         { roomId: roomId },
@@ -28,7 +29,7 @@ const deleteRoom = async (req, res) => {
         }
       );
       return res.json(
-        jsonGenerate(StatusCode.OK, "Xoa Phong Thanh cong", null)
+        jsonGenerate(StatusCode.OK, "Xoa Phong Thanh cong", result)
       );
     }
   } catch (error) {
