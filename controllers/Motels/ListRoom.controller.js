@@ -18,6 +18,8 @@ const listRoom = async (req, res) => {
     //   .exec();
     const result = await Room.find({ motelId: req.query.motelId })
       .populate("member")
+      .populate("motelId")
+      .populate("userSub")
       .populate("services");
 
     return res.json(jsonGenerate(StatusCode.OK, result?.motelName, result));
