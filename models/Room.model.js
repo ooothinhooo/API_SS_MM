@@ -40,12 +40,6 @@ const roomsSchema = mongoose.Schema(
     deposit: {
       type: String,
     },
-    electricityPrice: {
-      type: String,
-    },
-    waterPrice: {
-      type: String,
-    },
     //kỳ hạn
     term: {
       type: String,

@@ -13,7 +13,8 @@ const userSubToRoom = async (req, res) => {
   try {
     const { roomId, memberId } = req.query;
     // const member = ({ name, sdt, avatar, email, cccd, note } = req.body);
-
+    const now = new Date(Date.now());
+    const formattedDate = now.toDateString();
     const result = await Room.findById(roomId);
     const member = await Member.findById({ _id: memberId });
     if (result && member) {
@@ -21,6 +22,7 @@ const userSubToRoom = async (req, res) => {
         { _id: roomId },
         {
           userSub: memberId,
+          checkIn: formattedDate,
         }
       );
 

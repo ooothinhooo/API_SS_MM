@@ -15,6 +15,7 @@ const addRoom = async (req, res) => {
       req.query;
 
     // const user = await User.findById(req.userId)
+    const Motel = await Motels.findOneAndUpdate({ _id: motelId });
     const result = await Room.create({
       userId: req.userId,
       motelId: motelId,
@@ -22,8 +23,19 @@ const addRoom = async (req, res) => {
       roomFee,
       deposit,
       category,
+      services: Motel.services,
     });
     if (result) {
+      const service = await Service.updateMany(
+        { _id: { $in: Motel.services } },
+        {
+          $push: { RoomUse: result },
+          //   $set: { services: serviceId },
+        }
+      );
+      return res.json(
+        jsonGenerate(StatusCode.OK, `Thêm phòng thành công`, { x })
+      );
     }
     return res.json(
       jsonGenerate(StatusCode.OK, `Thêm phòng ${roomCode} thành công`, result)
