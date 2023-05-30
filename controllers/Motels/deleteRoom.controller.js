@@ -22,7 +22,13 @@ const deleteRoom = async (req, res) => {
         { _id: result?.services },
         { $pull: { RoomUse: roomId } }
       );
-      await Member.findOneAndUpdate(
+      // await Member.findOneAndUpdate(
+      //   { roomId: roomId },
+      //   {
+      //     roomId: null,
+      //   }
+      // );
+      await Member.updateMany(
         { roomId: roomId },
         {
           roomId: null,

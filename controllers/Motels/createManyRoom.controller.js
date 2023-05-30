@@ -43,6 +43,7 @@ const createManyRoom = async (req, res) => {
             //   $set: { services: serviceId },
           }
         );
+
         return res.json(
           jsonGenerate(StatusCode.OK, `Thêm phòng thành công`, { x })
         );
@@ -59,16 +60,5 @@ const createManyRoom = async (req, res) => {
   } catch (error) {}
 };
 
-const PushMotel = async (Queue) => {
-  try {
-    Queue.map((item) => {
-      Motels.findOneAndUpdate(
-        { _id: motelId },
-        {
-          $push: { rooms: item?._id },
-        }
-      );
-    });
-  } catch (error) {}
-};
+
 module.exports = createManyRoom;
