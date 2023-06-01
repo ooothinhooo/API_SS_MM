@@ -10,7 +10,22 @@ const rooms = require("../../models/Room.model.js");
 
 const addMember = async (req, res) => {
   try {
-    const newPost = await Member.create({ ...req.body });
+    const {
+      fullName,
+      dob,
+      cccd,
+      dateRange,
+      sex,
+      phone,
+      address,
+      carNum,
+      idPhoto1,
+      idPhoto2,
+      roomId,
+    } = req.body;
+    const newPost = await Member.create({
+      ...req.body,
+    });
     // await newPost.save();
     // wait Service.create({
     // return res.status(200).json({ message: "Post created successfully" });

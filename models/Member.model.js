@@ -6,7 +6,6 @@ const memberSchema = mongoose.Schema(
     fullName: { type: String, required: true },
     avatar: { type: String },
     cccd: { type: String, required: true },
-    avatar: { type: String },
     idPhoto1: { type: String },
     idPhoto2: { type: String },
     dateRange: { type: String, required: true },

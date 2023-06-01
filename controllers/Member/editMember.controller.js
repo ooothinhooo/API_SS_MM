@@ -9,12 +9,37 @@ const Member = require("../../models/Member.model.js");
 const Room = require("../../models/Room.model.js");
 
 const editMember = async (req, res) => {
+  const {
+    fullName,
+    dob,
+    cccd,
+    dateRange,
+    sex,
+    phone,
+    address,
+    carNum,
+    idPhoto1,
+    idPhoto2,
+    roomId,
+  } = req.body;
   try {
     const result = await Member.findByIdAndUpdate(
       { _id: req.query.memberId },
-      { ...req.body }
+      {
+        fullName,
+        dob,
+        cccd,
+        dateRange,
+        sex,
+        phone,
+        address,
+        carNum,
+        idPhoto1,
+        idPhoto2,
+        roomId,
+      }
     );
-    if (req?.body?.roomId) {
+    if (req?.body.roomId) {
       const room = await Room.findById({ _id: req?.body.roomId });
       if (!room?.member.includes(req.query.memberId)) {
         const result1 = await Room?.findByIdAndUpdate(
