@@ -8,17 +8,26 @@ const Motels = require("../../models/Motels.model.js");
 const { StatusCode } = require("../../utils/constants.js");
 const { jsonGenerate } = require("../../utils/helpers.js");
 
-// Tìm và cập nhật object theo id
-function updateObjById(arr, month, newValues) {
-  // Tìm index của object cần cập nhật
-  let index = arr.findIndex((obj) => obj.month === month);
-  // Nếu không tìm thấy object, trả về mảng ban đầu
-  if (index === -1) {
-    return arr;
+function updateObjsByMonth(arr, months, status) {
+  // Create a new array to store the updated objects
+  let newArr = [...arr];
+  let statusFalse = { status: false };
+  // Loop through the months array
+  for (let i = 0; i < newArr.length; i++) {
+    let updatedObj = { ...newArr[i], ...statusFalse };
+    newArr[i] = updatedObj;
   }
-  // Cập nhật object và trả về mảng mới
-  let updatedObj = { ...arr[index], ...newValues };
-  return [...arr.slice(0, index), updatedObj, ...arr.slice(index + 1)];
+  for (let month of months) {
+    // Find the index of the object to update
+    let index = newArr.findIndex((obj) => obj.month === month);
+    // If the object is found, update it
+    if (index !== -1) {
+      let updatedObj = { ...newArr[index], ...status };
+      newArr[index] = updatedObj;
+    }
+  }
+  // Return the new array with updated objects
+  return newArr;
 }
 
 const checkBill = async (req, res) => {
@@ -26,27 +35,36 @@ const checkBill = async (req, res) => {
     // const { newWater, oldWater, roomId } = req.query;
     // const result = await Room.findById(roomId);
     const { roomId } = req.query;
-    const { oldWater, newWater, oldEle, newEle, month, status } = req.body;
+    const { ArrayChecked, ArrayNoChecked } = req.body;
+    let statusTrue = { status: true };
+    let statusFalse = { status: false };
     const result = await Room.findOne({
       $and: [{ _id: roomId }, { userId: req.userId }],
     });
     if (result) {
-      let bill = updateObjById(result.bill, month, {
-        month,
-        oldWater,
-        newWater,
-        oldEle,
-        newEle,
-        status,
-      });
-      await result.updateOne({
+      let bill = updateObjsByMonth(
+        result.bill,
+        ArrayChecked,
+        statusTrue,
+        statusFalse
+      );
+      const x = await result.updateOne({
         $set: {
           bill,
         },
       });
-      return res.json(jsonGenerate(StatusCode.OK, "Them thanh cong"));
+
+      // if (x) {
+      //   let bill = updateObjsByMonth(result.bill, ArrayNoChecked, statusFalse);
+      //   await result.updateOne({
+      //     $set: {
+      //       bill,
+      //     },
+      //   });
+      // }
+      return res.json(jsonGenerate(StatusCode.OK, "Cập Nhật Thành Công"));
     }
-    return res.json(jsonGenerate(StatusCode.BADREQUEST, "Them That Bai"));
+    return res.json(jsonGenerate(StatusCode.BADREQUEST, "Cập Nhật Thất Bại"));
   } catch (error) {}
 };
 
