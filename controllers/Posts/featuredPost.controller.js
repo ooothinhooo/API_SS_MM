@@ -15,11 +15,11 @@ const featuredPost = async (req, res) => {
       if (page < 1) page = 1;
       var skip = (page - 1) * PAGE_SIZE;
       Post.find({
-        $and: [
-          {
-            isPrivate: false,
-          },
-        ],
+        // $and: [
+        //   {
+        //     isPrivate: false,
+        //   },
+        // ],
       })
         .populate("userId likes", "username avatar first_name last_name")
         .populate({

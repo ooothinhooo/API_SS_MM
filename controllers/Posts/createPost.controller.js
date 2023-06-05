@@ -8,13 +8,13 @@ const { jsonGenerate } = require("../../utils/helpers.js");
 
 const createPost = async (req, res) => {
   try {
-    const newPost = new Post({ ...req.body, userId: req.userId });
-    await newPost.save();
+    const newPost = await Post.create({ ...req.body, userId: req.userId });
+    // await newPost.save();
 
-    const post = await Post.findById({ _id: newPost._id }).populate(
-      "userId likes",
-      "username avatar first_name last_name"
-    );
+    // const post = await Post.findById({ _id: newPost._id }).populate(
+    //   "userId likes",
+    //   "username avatar first_name last_name"
+    // );
     if (newPost) {
       const user = await User.findOneAndUpdate(
         { _id: req.userId },
@@ -25,7 +25,7 @@ const createPost = async (req, res) => {
     }
     return res
       .status(200)
-      .json({ message: "Post created successfully", newPost: post });
+      .json({ message: "Post created successfully", newPost });
   } catch (error) {
     return res.status(500).json({ message: error.message, error });
   }
