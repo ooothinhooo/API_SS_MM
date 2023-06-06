@@ -19,7 +19,7 @@ const findOnePost = async (req, res) => {
         },
       })
       .sort({ createdAt: -1 });
-    return res.json(jsonGenerate(StatusCode.SUCCESS, "All Posts List", list));
+    return res.json(jsonGenerate(StatusCode.OK, "All Posts List", list));
   } catch (error) {
     return res.json(
       jsonGenerate(StatusCode.UNPROCESSABLE_ENTITY, "Error", error)

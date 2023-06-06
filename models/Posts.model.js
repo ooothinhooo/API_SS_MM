@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const postsSchema = mongoose.Schema(
   {
     userId: { type: mongoose.Types.ObjectId, ref: "user" },
-    addresses: String, //
+    address: String, //
     phone: String, //
     price: String, //
     province: String, //
