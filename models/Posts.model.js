@@ -16,6 +16,7 @@ const postsSchema = mongoose.Schema(
     isPrivate: { type: Boolean },
     images: { type: Array, default: [] }, //
     likes: [{ type: mongoose.Types.ObjectId, ref: "user" }],
+    saves: [{ type: mongoose.Types.ObjectId, ref: "user" }],
     comments: [{ type: mongoose.Types.ObjectId, ref: "comment" }],
   },
   { timestamps: true }

@@ -10,13 +10,21 @@ const savePost = async (req, res) => {
   try {
     const { _id } = req.query;
     const user = await User.findById(req.userId);
+    const post = await Post.findById({ _id: _id });
     let hasValue = user.SavePost.includes(_id);
+
     // console.log(hasValue); // true
     if (!hasValue) {
       await user.updateOne({ $push: { SavePost: _id } });
+      await post.updateOne({
+        $push: { saves: req.userId },
+      });
       return res.json(jsonGenerate(StatusCode.SUCCESS, "Save Succssfully"));
     } else {
       await user.updateOne({ $pull: { SavePost: _id } });
+      await post.updateOne({
+        $pull: { saves: req.userId },
+      });
       return res.json(jsonGenerate(StatusCode.SUCCESS, "Unsave Succssfully"));
     }
   } catch (error) {}
