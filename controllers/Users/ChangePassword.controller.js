@@ -24,16 +24,13 @@ const changePassword = async (req, res) => {
     const verifiedNew = bcrypt.compareSync(password, user.password);
     if (verifiedNew) {
       return res.json(
-        jsonGenerate(
-          StatusCode.VALIDATION_ERROR,
-          "Mật Khẩu Mới Trùng Mật Khẩu Cũ"
-        )
+        jsonGenerate(StatusCode.BADREQUEST, "Mật Khẩu Mới Trùng Mật Khẩu Cũ")
       );
     }
     await User.findByIdAndUpdate(req.userId, { password: hashedPassword });
     return res.json(
       jsonGenerate(
-        StatusCode.SUCCESS,
+        StatusCode.OK,
         "Thay Đổi Mật Khẩu Thành Công",
         hashedPassword
       )

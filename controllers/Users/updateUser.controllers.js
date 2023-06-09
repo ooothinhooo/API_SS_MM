@@ -37,7 +37,7 @@ const updateUser = async (req, res) => {
       const result = await User.findByIdAndUpdate(_id, data);
       return res.json(
         jsonGenerate(
-          StatusCode.SUCCESS,
+          StatusCode.OK,
           "Update Personal Information Successfully",
           result
         )
