@@ -33,9 +33,7 @@ const addRoom = async (req, res) => {
           //   $set: { services: serviceId },
         }
       );
-      return res.json(
-        jsonGenerate(StatusCode.OK, `Thêm phòng thành công`, { x })
-      );
+      return res.json(jsonGenerate(StatusCode.OK, `Thêm phòng thành công`));
     }
     return res.json(
       jsonGenerate(StatusCode.OK, `Thêm phòng ${roomCode} thành công`, result)

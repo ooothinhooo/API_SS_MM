@@ -98,6 +98,9 @@ const searchPost = async (req, res) => {
           { district: title },
           { ward: title },
           { address: title },
+          { desc: title },
+          { roomFee: title },
+          { phone: title },
         ],
       })
         .sort({ view: -1 })
