@@ -15,7 +15,7 @@ const createManyRoom = async (req, res) => {
     const { roomCode, motelId, roomFee, deposit, category, service } =
       req.query;
     const { room } = req.body;
-    const Motel = await Motels.findOneAndUpdate({ _id: motelId });
+    const Motel = await Motels.findOne({ _id: motelId });
     if (Motel) {
       const createQueue = [];
 

@@ -15,7 +15,7 @@ const addRoom = async (req, res) => {
       req.query;
 
     // const user = await User.findById(req.userId)
-    const Motel = await Motels.findOneAndUpdate({ _id: motelId });
+    const Motel = await Motels.findOne({ _id: motelId });
     const result = await Room.create({
       userId: req.userId,
       motelId: motelId,
