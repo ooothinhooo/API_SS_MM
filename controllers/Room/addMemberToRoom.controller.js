@@ -17,6 +17,14 @@ const addMemberToRoom = async (req, res) => {
     const result = await Room.findById(roomId);
     const member = await Member.findById({ _id: memberId });
     if (result && member) {
+     if (member?.roomId) {
+       const Oldroom = await Room.findOneAndUpdate(
+         { _id: member?.roomId },
+         {
+           $pull: { member: memberId },
+         }
+       );
+     }
       const room = await Room.findOneAndUpdate(
         { _id: roomId },
         {
