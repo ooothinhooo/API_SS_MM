@@ -36,12 +36,7 @@ const Login = async (req, res) => {
     const token = Jwt.sign({ userId: user._id }, JWT_TOKEN_SECRET);
 
     if (!verified) {
-      return res.json(
-        jsonGenerate(
-          StatusCode.UNPROCESSABLE_ENTITY,
-          "Username or password is incorrect"
-        )
-      );
+      return res.json(jsonGenerate(201, "Username or password is incorrect"));
     }
 
     if (user.access == "admin") {
@@ -78,13 +73,7 @@ const Login = async (req, res) => {
       })
     );
   }
-  res.json(
-    jsonGenerate(
-      StatusCode.VALIDATION_ERROR,
-      "Validatiion error",
-      errors.mapped()
-    )
-  );
+  res.json(jsonGenerate(202, "Validatiion error", errors.mapped()));
 };
 
 module.exports = Login;
