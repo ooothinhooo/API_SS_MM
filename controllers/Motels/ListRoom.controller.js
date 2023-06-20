@@ -20,7 +20,11 @@ const listRoom = async (req, res) => {
       .populate("member")
       .populate("motelId")
       .populate("userSub")
-      .populate("services");
+      .populate({
+        path: "services",
+        select: "name value unit",
+      });
+    // .populate("services");
 
     return res.json(jsonGenerate(StatusCode.OK, result?.motelName, result));
   } catch (error) {
