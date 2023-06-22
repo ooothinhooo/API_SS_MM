@@ -22,8 +22,8 @@ const registerMotel = async (req, res) => {
     // console.log(result?._id);
     if (result) {
       ServiceData = [
-        { motelId: result, name: "Tiền Điện", value: "5000", unit: "Kwh" },
-        { motelId: result, name: "Tiền Nước", value: "10000", unit: "Khối" },
+        { motelId: result, name: "Tiền Điện", value: "5000", unit: "kwh" },
+        { motelId: result, name: "Tiền Nước", value: "10000", unit: "met" },
       ];
       const ServiceArray = [];
       ServiceData.map((item) => {
