@@ -12,7 +12,10 @@ const Member = require("../../models/Member.model.js");
 const findRoom = async (req, res) => {
   try {
     const { roomId, month } = req.query;
-    const room = await Room.findOne({ _id: roomId });
+    const room = await Room.findOne({ _id: roomId })
+      .populate("member")
+      .populate("motelId")
+      .populate("userSub");
     var result = room?.bill?.find((obj) => obj.month === month);
     console.log(result);
     // const x = room.select("-bill");
