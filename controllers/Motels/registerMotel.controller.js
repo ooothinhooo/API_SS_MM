@@ -16,14 +16,14 @@ const registerMotel = async (req, res) => {
     const result = await Motels.create({
       userId: req.userId,
       motelName: req.body.motelName,
-      motelInfo: req.body.Info,
+      phone: req.body.phone,
     });
 
     // console.log(result?._id);
     if (result) {
       ServiceData = [
-        { motelId: result, name: "Tiền Điện", value: "5000", unit: "kwh" },
-        { motelId: result, name: "Tiền Nước", value: "10000", unit: "met" },
+        { motelId: result, name: "Tiền Điện", value: "3000", unit: "kwh" },
+        { motelId: result, name: "Tiền Nước", value: "8000", unit: "met" },
       ];
       const ServiceArray = [];
       ServiceData.map((item) => {
