@@ -22,6 +22,10 @@ const addMemberToRoom = async (req, res) => {
          { _id: member?.roomId },
          {
            $pull: { member: memberId },
+
+           userSub: null,
+
+           checkIn: null,
          }
        );
      }
