@@ -11,9 +11,24 @@ const findOneUser = async (req, res) => {
     // var uid = req.query.uid;
     const infoCreators = await User.findById({ _id: req.query._id })
       .select("-password")
-      //   .select("-password")
-      .populate("Posts")
-      .populate("SavePost")
+      // .populate({
+      //   path: "Posts",
+      //   select: "avatar first_name last_name",
+      // })
+      .populate({
+        path: "Posts",
+        populate: {
+          path: "userId likes",
+          select: "username avatar first_name last_name",
+        },
+      })
+      .populate({
+        path: "SavePost",
+        populate: {
+          path: "userId likes",
+          select: "username avatar first_name last_name",
+        },
+      })
       .exec();
 
     return res.json(
